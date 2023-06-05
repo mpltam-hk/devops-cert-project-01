@@ -1,0 +1,16 @@
+pipeline{
+    agent any
+    stages{
+        stage('Clone the repo'){
+            steps{
+                git branch: 'main', url: 'https://github.com/mpltam-hk/devops-cert-project-01'
+            }
+        }
+        
+        stage('Execute the playbook using Ansible'){
+            steps{
+                ansiblePlaybook credentialsId: 'ansibleHost', disableHostKeyChecking: true, installation: 'myAnsible', inventory: 'dev.inv', playbook: 'playbook-docker.yml'
+            }
+        }
+    }
+}
